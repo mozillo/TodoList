@@ -484,3 +484,156 @@ module.exports = function(state, action) {
 ```
 
 会看到这里都在用 ...展开，这样可以创建一个新的对象，而旧的对象不会发生改变，这个的目的是为了另一个功能，具体这里先不解释了。
+
+现在已经有了Navigator，有个操作state的三个action，有了可以返回完整数据结构的reducer，现在只需要写一个List的页面来载入，添加，完成/撤销todo任务就可以了。
+
+***创建文件 List.js 文件位于 ./src/containers/List.js:***
+
+```
+import React, {
+	Component,
+	View,
+	ListView,
+	TextInput,
+	Text,
+	Image,
+	Dimensions,
+	TouchableOpacity,
+	ActivityIndicatorIOS,
+	StyleSheet,
+} from 'react-native';
+
+const fullWidth = Dimensions.get('window').width;
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		marginTop: 20,
+	},
+	todoRow: {
+		paddingLeft: 10,
+		paddingRight: 10,
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'space-between',
+		width: fullWidth,
+		height: 40,
+		borderBottomColor: '#EEEEEE',
+		borderBottomWidth: 1,
+	},
+	todoText: {
+		fontSize: 16,
+		color: '#666666',
+	},
+	todoTextDone: {
+		fontSize: 16,
+		color: '999999',
+		textDecorationColor: '#999999',
+		textDecorationLine: 'line-through', 
+		textDecorationStyle: 'solid'
+	},
+	success: {
+		color: 'green',
+	},
+	pendding: {
+		color: 'blue',
+	},
+	inputText: {
+		height: 40,
+		width: (fullWidth-20)*0.8,
+		borderBottomColor: '#EEEEEE',
+		borderBottomWidth: 1,
+	},
+	button: {
+		alignItems: 'center',
+		justifyContent: 'center',
+		width: (fullWidth - 20)*0.2,
+		backgroundColor: '#EEEEEE',
+		padding: 10,
+	}
+});
+
+export default class List extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			text: null,
+			placeholder: '写下你将来要做的事情'
+		}
+	}
+
+	componentDidMount() {
+		const { loadTodos } = this.props.actions;
+		loadTodos();
+	}
+
+	appendTodoList() {
+		const text = this.state.text;
+		const { appendTodo } = this.props.actions;
+		appendTodo(text);
+		this.setState({ text: null });
+	}
+
+	renderHeader() {
+		return (
+			<View style={styles.todoRow}>
+				<TextInput
+					value={this.state.text}
+					placeholder={this.state.placeholder}
+					onChangeText={(text) => this.setState({ text })}
+					style={styles.inputText} />
+
+				<TouchableOpacity onPress={this.appendTodoList.bind(this)} style={styles.button}>
+					<Text style={styles.buttonText}>添加</Text>
+				</TouchableOpacity>
+
+			</View>
+		);
+	}
+
+	renderRow(dataRow) {
+		const { selectTodo } = this.props.actions;
+		return (
+		
+			<View style={styles.todoRow}>
+				<Text style={ dataRow.selected ? styles.todoTextDone : styles.todoText}>{dataRow.text}</Text>
+				<TouchableOpacity onPress={() => selectTodo(dataRow)}>
+					{ dataRow.selected ? <Text style={styles.success}>完成</Text> : <Text style={styles.pendding}>待办</Text> }
+				</TouchableOpacity>
+
+			</View>
+		
+		)
+	} 
+
+	renderList() {
+		const { todo } = this.props.state;
+		return (
+			<ListView 
+				style={styles.container}
+				dataSource={todo.dataSource}
+				renderHeader={this.renderHeader.bind(this)}
+				renderRow={this.renderRow.bind(this)} />
+		);
+	}
+
+	renderIndicator() {
+		return (
+			<ActivityIndicatorIOS animating={true} color={'#808080'} size={'small'} />
+		);
+	}
+
+	render() {
+		const { todo } = this.props.state;
+		return (
+			<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+				{ todo.type != 'INITIAL_TODOS' ? this.renderList() : this.renderIndicator() } 
+			</View>
+		);
+	}
+}
+```
+
+仔细看我是怎么获取跟使用state跟action的。
+目前就写这么多了，可能会有一些错误的地方，后面可以跟帖补上。
