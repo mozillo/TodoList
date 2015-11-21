@@ -1,0 +1,17 @@
+{
+  "name": "TodoList",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node_modules/react-native/packager/packager.sh"
+  },
+  "dependencies": {
+    "normalizr": "^1.4.0",
+    "react-native": "^0.14.2",
+    "react-redux": "^3.0.1",
+    "redux": "^3.0.4",
+    "redux-thunk": "^1.0.0"
+  }
+}
+
+
