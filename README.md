@@ -5,6 +5,9 @@
 3. 如何在react-native里更新ui
 4. 这个例子可能不是很具体，但是对于理解用法比较好(目前看到的例子都是counter)
 
+###ScreenShot
+<img src="https://raw.githubusercontent.com/mozillo/TodoList/master/sample.png" width="276"/>
+
 ###package.json 
 一些版本的东西(因为react-redux暂时用3.x，原因看 [this React Native issue](https://github.com/facebook/react-native/issues/2985))
 
