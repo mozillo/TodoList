@@ -637,3 +637,6 @@ export default class List extends Component {
 
 仔细看我是怎么获取跟使用state跟action的。
 目前就写这么多了，可能会有一些错误的地方，后面可以跟帖补上。
+
+黑色斜体高亮部分是完整的代码，拷贝或者改动都可以用的。
+[代码地址](https://github.com/mozillo/TodoList)
