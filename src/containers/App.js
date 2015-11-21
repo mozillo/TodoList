@@ -10,6 +10,8 @@ const createStoreWithThunk = applyMiddleware(thunk)(createStore);
 const reducer = combineReducers(reducers);
 const store = createStoreWithThunk(reducer);
 
+console.log(store.getState());
+
 export default class App extends Component {
 	render() {
 		return (

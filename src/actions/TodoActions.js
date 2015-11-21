@@ -4,7 +4,11 @@ const APPEND_TODO = 'APPEND_TODO';
 
 var loadTodos = () => {
 	return (dispatch) => {
-		dispatch({ type: LOAD_TODOS });
+		setTimeout(() => {
+			dispatch({ type: LOAD_TODOS });
+		}, 1000);
+
+		// fetch().then() => dispatch in promise 
 	}
 }
 
