@@ -221,7 +221,7 @@ export default class BaseApp extends Component {
     state: state
 }))
 ```
-这是一个es6的语法，叫es7.decorators，具体操作是把上一个App入口传入的Store里的state取到，然后作为props在BaseApp里面使用。
+这是一个语法，叫es7.decorators，具体操作是把上一个App入口传入的Store里的state取到，然后作为props在BaseApp里面使用。
 
 既然说到了state，那就先去创建一个reducer吧，先定义一下初始的state结构:
 
